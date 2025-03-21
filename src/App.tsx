@@ -1,14 +1,15 @@
+// App.jsx
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/Home";
-
+import { Layout } from "./components/layouts/Layout";
 
 function App() {
   return (
-    <div>
+    <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
       </Routes>
-    </div>
+    </Layout>
   );
 }
 
