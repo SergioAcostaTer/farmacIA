@@ -19,12 +19,13 @@ const categoriasFarmacos = [
 ];
 
 
+
 function Home() {
   return (
     <main
-      className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-pink-200 via-purple-100 to-white"
+      className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-pink-200 via-purple-200 to-blue-100 rounded-lg animate-gradient"
     >
-      <h1 className="text-xl font-bold mb-6">{getGreeting()}</h1>
+      <h1 className="text-3xl font-bold mb-6">{getGreeting()}</h1>
       <p className="text-center">This is the home page</p>
     </main>
   );
