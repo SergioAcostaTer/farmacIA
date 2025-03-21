@@ -17,12 +17,15 @@ importers:
       '@tauri-apps/plugin-opener':
         specifier: ^2
         version: 2.2.6
+      '@tauri-apps/plugin-updater':
+        specifier: ~2.6.1
+        version: 2.6.1
       lucide-react:
         specifier: ^0.483.0
         version: 0.483.0(react@18.3.1)
       postcss-cli:
         specifier: ^11.0.1
-        version: 11.0.1(postcss@8.5.3)
+        version: 11.0.1(jiti@2.4.2)(postcss@8.5.3)
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -47,7 +50,7 @@ importers:
         version: 19.0.4(@types/react@19.0.12)
       '@vitejs/plugin-react':
         specifier: ^4.3.4
-        version: 4.3.4(vite@6.2.2(yaml@2.7.0))
+        version: 4.3.4(vite@6.2.2(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
@@ -573,6 +576,9 @@ packages:
 
   '@tauri-apps/plugin-opener@2.2.6':
     resolution: {integrity: sha512-bSdkuP71ZQRepPOn8BOEdBKYJQvl6+jb160QtJX/i2H9BF6ZySY/kYljh76N2Ne5fJMQRge7rlKoStYQY5Jq1w==}
+
+  '@tauri-apps/plugin-updater@2.6.1':
+    resolution: {integrity: sha512-iiOevw4kc12Ok99J9KthXwUqwPv1sYjG+tNEDZqPmwvOmIq7s58nKMRz6NJPKXT4U16NzMPffFcP/LUOsz6c4A==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -1501,6 +1507,10 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.4.0
 
+  '@tauri-apps/plugin-updater@2.6.1':
+    dependencies:
+      '@tauri-apps/api': 2.4.0
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.26.10
@@ -1534,14 +1544,14 @@ snapshots:
     dependencies:
       csstype: 3.1.3
 
-  '@vitejs/plugin-react@4.3.4(vite@6.2.2(yaml@2.7.0))':
+  '@vitejs/plugin-react@4.3.4(vite@6.2.2(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0))':
     dependencies:
       '@babel/core': 7.26.10
       '@babel/plugin-transform-react-jsx-self': 7.25.9(@babel/core@7.26.10)
       '@babel/plugin-transform-react-jsx-source': 7.25.9(@babel/core@7.26.10)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 6.2.2(yaml@2.7.0)
+      vite: 6.2.2(jiti@2.4.2)(lightningcss@1.29.2)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1794,14 +1804,14 @@ snapshots:
 
   pify@2.3.0: {}
 
-  postcss-cli@11.0.1(postcss@8.5.3):
+  postcss-cli@11.0.1(jiti@2.4.2)(postcss@8.5.3):
     dependencies:
       chokidar: 3.6.0
       dependency-graph: 1.0.0
       fs-extra: 11.3.0
       picocolors: 1.1.1
       postcss: 8.5.3
-      postcss-load-config: 5.1.0(postcss@8.5.3)
+      postcss-load-config: 5.1.0(jiti@2.4.2)(postcss@8.5.3)
       postcss-reporter: 7.1.0(postcss@8.5.3)
       pretty-hrtime: 1.0.3
       read-cache: 1.0.0
@@ -1812,11 +1822,12 @@ snapshots:
       - jiti
       - tsx
 
-  postcss-load-config@5.1.0(postcss@8.5.3):
+  postcss-load-config@5.1.0(jiti@2.4.2)(postcss@8.5.3):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.7.0
     optionalDependencies:
+      jiti: 2.4.2
       postcss: 8.5.3
 
   postcss-reporter@7.1.0(postcss@8.5.3):
@@ -1956,15 +1967,6 @@ snapshots:
       fsevents: 2.3.3
       jiti: 2.4.2
       lightningcss: 1.29.2
-      yaml: 2.7.0
-
-  vite@6.2.2(yaml@2.7.0):
-    dependencies:
-      esbuild: 0.25.1
-      postcss: 8.5.3
-      rollup: 4.36.0
-    optionalDependencies:
-      fsevents: 2.3.3
       yaml: 2.7.0
 
   wrap-ansi@7.0.0:
