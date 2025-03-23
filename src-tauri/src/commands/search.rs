@@ -24,32 +24,23 @@ pub async fn search_medications(query: String) -> Vec<Medication> {
     result
 }
 
-// #[command]
-// pub async fn get_document_content(nregistro: String, tipo_doc: i32, seccion: Option<String>) -> Result<String, String> {
-//     let client = Client::new();
-//     let mut url = format!(
-//         "https://cima.aemps.es/cima/rest/docSegmentado/contenido/{}?nregistro={}",
-//         tipo_doc, nregistro
-//     );
 
-//     if let Some(sec) = seccion {
-//         url.push_str(&format!("&seccion={}", sec));
-//     }
+// New command to get medication details by num_registro
+#[command]
+pub async fn get_medication_by_num_registro(num_registro: String) -> Result<Medication, String> {
+    let pool: DbPool = init_db().await;
 
-//     let response = client
-//         .get(&url)
-//         .header("Accept", "text/html") // Request HTML content
-//         .send()
-//         .await
-//         .map_err(|e| format!("Failed to fetch document content: {}", e))?;
+    let result = sqlx::query_as::<_, Medication>(
+        r#"
+        SELECT * FROM medicamentos 
+        WHERE num_registro = ?
+        LIMIT 1
+        "#
+    )
+    .bind(&num_registro)
+    .fetch_one(&*pool.read().await)
+    .await
+    .map_err(|e| format!("Failed to fetch medication with num_registro {}: {}", num_registro, e))?;
 
-//     if response.status().is_success() {
-//         let html_content = response
-//             .text()
-//             .await
-//             .map_err(|e| format!("Failed to get HTML content: {}", e))?;
-//         Ok(html_content)
-//     } else {
-//         Err(format!("API error: {}", response.status()))
-//     }
-// }
+    Ok(result)
+}
