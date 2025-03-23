@@ -6,19 +6,18 @@ import {
   MoonIcon,
   SunIcon,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "dark");
+  const navigate = useNavigate();
 
-  // Effect to update theme in localStorage and apply to the document body
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme); // Save theme preference in localStorage
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Function to toggle theme
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
@@ -55,6 +54,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 onMouseOut={(e) =>
                   (e.currentTarget.style.backgroundColor = "transparent")
                 }
+                onClick={() => navigate("/home")}
               >
                 <HomeIcon className="h-5 w-5" />
               </button>
@@ -69,10 +69,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 onMouseOut={(e) =>
                   (e.currentTarget.style.backgroundColor = "transparent")
                 }
+                onClick={() => navigate("/home?overlay=open")}
               >
                 <SearchIcon className="h-5 w-5" />
               </button>
-              <button
+              {/* <button
                 className="p-2 rounded-md transition-colors cursor-pointer"
                 style={{
                   color: "var(--text-secondary)",
@@ -85,7 +86,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 }
               >
                 <InfoIcon className="h-5 w-5" />
-              </button>
+              </button> */}
 
               {/* Theme Toggle Button */}
               <button

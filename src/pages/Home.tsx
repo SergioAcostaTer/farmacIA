@@ -4,6 +4,7 @@ import { SearchIcon, X } from "lucide-react";
 import { Category } from "../components/home/Category";
 import { invoke } from "@tauri-apps/api/core";
 import { Medication } from "../types/Medication.ts";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const PHARMACIES = [
   "Antibióticos",
@@ -18,18 +19,30 @@ function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Medication[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const modalInputRef = useRef<HTMLInputElement>(null); // Create a ref for the modal input
+  const modalInputRef = useRef<HTMLInputElement>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  // Check URL param on component mount to open modal
+  useEffect(() => {
+    const overlayParam = searchParams.get("overlay");
+    if (overlayParam === "open") {
+      setIsModalOpen(true);
+    }
+  }, [searchParams]);
 
   const handleSearch = async (query: string) => {
     setSearchQuery(query);
     if (query.trim() === "") {
       setSearchResults([]);
       setIsModalOpen(false);
+      setSearchParams({}); // Clear URL params when search is empty
       return;
     }
 
     try {
       setIsModalOpen(true);
+      setSearchParams({ overlay: "open" }); // Update URL param when opening modal
       const results = await invoke("search_medications", { query });
       setSearchResults(results as Medication[]);
     } catch (error) {
@@ -42,16 +55,15 @@ function Home() {
     setIsModalOpen(false);
     setSearchQuery("");
     setSearchResults([]);
+    setSearchParams({}); // Clear URL param when closing modal
   };
 
-  // Focus the modal input when the modal opens
   useEffect(() => {
     if (isModalOpen && modalInputRef.current) {
       modalInputRef.current.focus();
     }
   }, [isModalOpen]);
 
-  // Handle ESC key to close modal
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isModalOpen) {
@@ -63,7 +75,7 @@ function Home() {
   }, [isModalOpen]);
 
   return (
-    <div className="bg-[var(--bg-primary)] text-[var(--text-primary)] relative flex flex-col gap-6 p-4 md:p-8">
+    <div className="bg-[var(--bg-primary)] text-[var(--text-primary)] relative flex flex-col gap-6 p-4 md:p-8 min-w-[450px]">
       {/* Header Section */}
       <div className="text-center">
         <h1 className="text-3xl font-bold mb-2">{getGreeting()}</h1>
@@ -110,7 +122,7 @@ function Home() {
             {/* Search Input inside Modal */}
             <div className="relative mb-6">
               <input
-                ref={modalInputRef} // Attach the ref to the modal input
+                ref={modalInputRef}
                 type="text"
                 placeholder="Buscar fármaco (Presiona ESC para cerrar)"
                 value={searchQuery}
@@ -131,6 +143,7 @@ function Home() {
                     <li
                       key={med?.id}
                       className="p-4 bg-[var(--bg-secondary)] rounded-md hover:bg-[var(--bg-hover)] transition-colors cursor-pointer"
+                      onClick={() => navigate(`/med/${med?.num_registro}`)}
                     >
                       <p>
                         <strong>{med?.medicamento}</strong> - {med?.laboratorio}
@@ -152,11 +165,11 @@ function Home() {
       )}
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+      {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
         {PHARMACIES.map((categoria) => (
           <Category key={categoria} name={categoria} />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
