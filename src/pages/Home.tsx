@@ -1,19 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { getGreeting } from "../utils/getGreeting";
 import { SearchIcon, X } from "lucide-react";
-import { Category } from "../components/home/Category";
+// import { Category } from "../components/home/Category";
 import { invoke } from "@tauri-apps/api/core";
 import { Medication } from "../types/Medication.ts";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-const PHARMACIES = [
-  "Antibióticos",
-  "Antineoplásicos",
-  "Antivirales",
-  "Fármacos cardiovasculares",
-  "Psicofármacos",
-  "Antiinflamatorios y analgésicos",
-];
+// const PHARMACIES = [
+//   "Antibióticos",
+//   "Antineoplásicos",
+//   "Antivirales",
+//   "Fármacos cardiovasculares",
+//   "Psicofármacos",
+//   "Antiinflamatorios y analgésicos",
+// ];
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
